@@ -20,7 +20,7 @@ export PATH="/Users/yiwei/.antigravity/antigravity/bin:$PATH"
 export EDITOR='vim'
 
 # --- 2. Basic Zsh Settings (Since we removed OMZ) ---
-
+ 
 # Initialize the completion system (Required for Tab completion)
 autoload -Uz compinit
 compinit
