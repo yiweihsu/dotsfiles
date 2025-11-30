@@ -18,7 +18,7 @@ export EDITOR='vim'
 export ZSH="$HOME/.oh-my-zsh"
 
 # Disable default OMZ theme (We are using Starship instead for speed)
-ZSH_THEME=""files
+ZSH_THEME=""
 
 # Plugins (Load git only here; manage others via Brew for performance)
 plugins=(git)
@@ -63,11 +63,24 @@ alias src="source ~/.zshrc && echo 'Zsh config reloaded!'"
 # Quickly edit Zsh config (Uses VS Code if available)
 alias zshconfig="code ~/.zshrc"
 
-# GitHub Copilot CLI shortcut (The '??' command)
-# Usage: ?? "how to kill process on port 3000"
-if command -v gh &> /dev/null; then
-    eval "$(gh copilot alias -- zsh)"
-    alias '??'='gh copilot suggest'
+# ==============================================
+# GitHub Copilot CLI (Suggestion Mode)
+# ==============================================
+if command -v copilot &> /dev/null; then
+
+    function ask_copilot() {
+        if [ -z "$1" ]; then
+            # No arguments: Start interactive session
+            copilot
+        else
+            # Arguments provided:
+            # We append instructions to force it to ONLY show the command.
+            # This mimics the old 'gh copilot suggest' behavior.
+            copilot -p "Show me the shell command to: $* . Do not execute it, just display the command and a brief explanation."
+        fi
+    }
+
+    alias '??'='ask_copilot'
 fi
 
 # Common Git aliases (Muscle memory, even though OMZ has some)
