@@ -62,3 +62,5 @@ copy-on-select = true
 
 # --- Miscellaneous ---
 confirm-close-surface = false
+
+keybind = cmd+f=write_scrollback_file:open
