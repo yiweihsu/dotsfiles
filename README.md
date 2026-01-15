@@ -1,6 +1,6 @@
 # 🛠️ My Dotfiles
 
-Minimal, fast, and AI-optimized setup for macOS using **Ghostty** + **Zsh**.
+Minimal, fast setup for macOS using **Ghostty** + **Zsh** + **Starship**.
 
 ## ⚡️ Quick Setup
 
@@ -10,68 +10,64 @@ Assumes you have [Homebrew](https://brew.sh) installed.
 
 ```bash
 # 1. Clone repo
-git clone [https://github.com/YOUR_USERNAME/dotfiles.git](https://github.com/YOUR_USERNAME/dotfiles.git) ~/dotfiles
+git clone https://github.com/YOUR_USERNAME/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 
-# 2. Install EVERYTHING (Tools, Shell, Fonts)
-brew install git stow gh starship zoxide zsh-autosuggestions zsh-syntax-highlighting
-brew install --cask font-jetbrains-mono-nerd-font
+# 2. Install all dependencies using Brewfile
+brew bundle install
 ```
 
-### 2\. Cleanup & Link (Stow)
+### 2. Link Dotfiles (Stow)
 
 Move existing configs aside to avoid conflicts, then link the new ones.
 
 ```bash
 # 1. Backup old configs (ignore errors if files don't exist)
 mv ~/.zshrc ~/.zshrc.bak
+mv ~/.zshenv ~/.zshenv.bak
+mv ~/.zprofile ~/.zprofile.bak
 mv ~/.config/ghostty/config ~/.config/ghostty/config.bak
-# Remove macOS default ghostty config location if it exists
-rm "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
+mv ~/.config/starship.toml ~/.config/starship.toml.bak
 
-# 2. Link files
+# 2. Link files using stow
 cd ~/dotfiles
 stow zsh
 stow ghostty
+stow starship
 ```
 
-### 3\. Finalize
+### 3. Finalize
 
 ```bash
-# Login to GitHub (for Copilot)
-gh auth login
-
 # Refresh Shell
 source ~/.zshrc
 ```
 
 ---
 
-## 🤖 AI Cheatsheet
+## 📦 What's Included
 
-### GitHub Copilot (`??`)
+### Shell & Prompt
+- **Zsh** - Shell configuration with .zshrc, .zshenv, and .zprofile
+- **Starship** - Fast, customizable prompt
+- **Zoxide** - Smarter cd command
 
-Powered by GitHub CLI. Best for general coding questions.
+### Terminal
+- **Ghostty** - Modern, fast terminal emulator
 
-| Command  | Usage                 | Description                                |
-| :------- | :-------------------- | :----------------------------------------- |
-| **`??`** | `??`                  | Start interactive AI agent session.        |
-| **`??`** | `?? "kill port 3000"` | Ask a specific question (Suggestion mode). |
+### Development Tools
+- **nvm** - Node.js version manager
+- **pyenv** - Python version manager
 
-### Codex CLI (`cx`)
+### Shell Enhancement
+- **zsh-autosuggestions** - Fish-like autosuggestions
+- **zsh-syntax-highlighting** - Real-time syntax highlighting
 
-Powered by OpenAI/Codex. Best for complex tasks or file manipulation.
-
-| Command   | Usage                    | Description                                            |
-| :-------- | :----------------------- | :----------------------------------------------------- |
-| **`cx`**  | `cx`                     | Enter interactive chat mode.                           |
-| **`cxe`** | `cxe "list large files"` | **Exec**ute a single command (Non-interactive).        |
-| **`cxa`** | `cxa "refactor main.js"` | **Full Auto** mode. Reads/writes files without asking. |
+---
 
 ## ⌨️ Shell Shortcuts
 
 | Command     | Description                                               |
 | :---------- | :-------------------------------------------------------- |
-| `z <dir>`   | Smart jump to directory (e.g., `z dot` -\> `~/dotfiles`). |
+| `z <dir>`   | Smart jump to directory (e.g., `z dot` -> `~/dotfiles`). |
 | `src`       | Reload `.zshrc`.                                          |
-| `zshconfig` | Open `.zshrc` in editor.                                  |
